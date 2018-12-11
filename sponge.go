@@ -7,7 +7,9 @@ sed '...' file | grep '...' | sponge file
 
 Description
 
-sponge reads standard input and writes it out to the specified file. Unlike a shell redirect, sponge soaks up all its input before opening the output file. This allows constricting pipelines that read from and write to the same file.
+sponge reads standard input and writes it out to the specified file. Unlike a
+shell redirect, sponge soaks up all its input before opening the output file.
+This allows constricting pipelines that read from and write to the same file.
 
 If no output file is specified, sponge outputs to stdout.
 
@@ -22,7 +24,7 @@ import (
 	"os"
 )
 
-func getSink() io.Writer {
+func GetSink() io.Writer {
 	switch len(os.Args) {
 	case 0:
 		panic("congrats: you won the game")
@@ -43,7 +45,7 @@ func getSink() io.Writer {
 	}
 }
 
-func sponge(in io.Reader, out io.Writer) error {
+func Sponge(in io.Reader, out io.Writer) error {
 	b := bytes.Buffer{}
 	if _, err := io.Copy(&b, in); err != nil {
 		return err
@@ -55,8 +57,8 @@ func sponge(in io.Reader, out io.Writer) error {
 }
 
 func main() {
-	src, sink := os.Stdin, getSink()
-	if err := sponge(src, sink); err != nil {
+	src, sink := os.Stdin, GetSink()
+	if err := Sponge(src, sink); err != nil {
 		fmt.Fprintf(os.Stderr, "error during pipe: %v\n", err)
 		os.Exit(3)
 	}
